@@ -90,3 +90,94 @@ After 24 weeks you are not "a GTM person who learned AI". You are:
 Roles that opens: Applied AI Engineer / Forward-Deployed Engineer (Anthropic, OpenAI, Sierra, Decagon, LangChain-type vendors), AI GTM Engineer / Head of GTM Engineering (Clay, Unify, 11x-type vendors), and AI Solutions Architect on the revenue side at any enterprise vendor. The scarce combination in all three is exactly yours: domain fluency in revenue **plus** production rigor.
 
 Risk to manage: 1 hour/day only works if the artifact, not the streak, is the scorecard. Miss days. Do not miss gates.
+
+
+---
+
+## ADDENDUM 2026-09-21 — the portfolio question (revised skip policy)
+
+**Question raised:** if everything lands in a personal GitHub portfolio, is skipping still right?
+
+**Answer: yes, but "skip" was the wrong word. Nothing gets thrown away — it gets *unpinned*.**
+
+The maths of a portfolio is not the maths of a curriculum. A hiring manager reads **3-6 pinned
+repos at roughly 90 seconds each**. Volume is not neutral; it is negative. 40 tutorial
+reproductions on a profile produce one sentence in a reviewer's head: *"followed a tutorial series."*
+That sentence competes directly with the one you want: *"built revenue systems and measured them."*
+
+### The rule that decides every case
+
+> **A repo earns a pin only if it contains your data, your numbers, or your domain.**
+> A cloned tutorial has none of the three. The same tutorial rebuilt over your sales corpus,
+> with a results table at the top of the README, has all three.
+
+### Two-tier structure (already scaffolded at `~/Projects/personal/`)
+
+| Tier | Repo | Contents | Pinned? |
+|---|---|---|---|
+| Flagship | `ai-engineering-proof` | The 7 phase folders. Each gate artifact with its results table. | Yes |
+| Flagship | Standalone repos split out at gates 4 and 5 (`gtm-mcp`, the deployed qualifier service) | The two objects people can install/hit themselves | Yes |
+| Lab | `ai-engineering-lab` | Every tutorial reproduction, framework spike, dead end. 3 lines each: tried / happened / kept. | No — public, honest, unpinned |
+
+This resolves the tension. Work through whatever you want from the 115 folders; the lab absorbs it.
+The portfolio stays at 4-6 objects that all carry numbers.
+
+### Three items promoted out of the old skip list
+
+| Item | Old call | New call | Why it changed |
+|---|---|---|---|
+| One model bake-off (`gpt-oss-vs-qwen3` or similar) | Skip as content | **Keep — as a published eval report**, Phase 2 | With a rubric and a golden set attached it stops being a hot take and becomes evidence you can run a fair evaluation. Also the most shareable post of the six. |
+| `attention-is-all-you-need-impl` | Skip | **Keep as a week-25 weekend piece** | Cheap insurance against the one interview doubt your CV invites: "does the GTM person actually know the fundamentals?" One repo, two days, permanently closes it. |
+| `rag-with-dockling` / document parsing | Already in Phase 1 | **Elevate to a pinned mini-repo** | Contract, invoice, and RFP parsing is a real enterprise revenue problem. It is the most commercially legible thing on the list. |
+
+### Still genuinely not worth building
+
+Not because they are hard or useless, but because **they cannot be differentiated by you**:
+the three near-identical thinking-UI clones, OCR variants 2-4, `siamese-network`,
+`train-yolo26-object-detection`, and the toy booking crews. There are thousands of identical
+copies of each on GitHub, and no version of them contains your data, numbers, or domain.
+If curiosity strikes, they go in the lab, not the profile.
+
+### Portfolio hygiene (this is where most people lose the points they earned)
+
+1. **README first block is a results table.** Not an architecture diagram, not a feature list.
+2. **A 20-second GIF or one screenshot** near the top. Reviewers do not clone.
+3. **A "what I'd do differently" section.** Strongest seniority signal per word on the entire page.
+4. **Profile README** stating the combination in one line: revenue systems, built and measured.
+5. **Commit steadily.** A 24-week contribution graph with real messages is itself an artifact —
+   it says "finishes things," which is the exact doubt the [[2026-06-16-applied-ai-12-week-path]]
+   plan was written to cure.
+6. **Never** push work data, client names, or DeepL material. Anonymise the corpora before they
+   touch this account.
+
+---
+
+## Personal GitHub account — status and next steps
+
+Local setup is **done** (2026-09-21):
+
+- SSH key generated: `~/.ssh/id_ed25519_personal` (ed25519, no passphrase).
+- SSH host alias `github-personal` added to `~/.ssh/config`, `IdentitiesOnly yes` — it cannot
+  collide with the DeepL key.
+- `~/.gitconfig` now has `includeIf gitdir:~/Projects/personal/` -> `~/.gitconfig-personal`,
+  so **commits under `~/Projects/personal/` can never carry `tolga.oral@deepl.com`**.
+  The email in that file is still the placeholder `REPLACE_ME@users.noreply.github.com`.
+- Repos scaffolded and first commit made: `~/Projects/personal/ai-engineering-proof`
+  (7 phase folders + PLAN.md) and `~/Projects/personal/ai-engineering-lab`.
+
+Username findings:
+
+| Candidate | State |
+|---|---|
+| `tolgaoral` | Taken, **0 public repos, created 2024-02-14** — almost certainly yours and dormant. Best option if you can still log in. |
+| `llrd` | Taken, 0 repos, created 2019 — possibly also yours. |
+| `verluna` | Yours, 14 repos, consultancy brand. Keep separate from the engineering portfolio. |
+| `tolga-oral`, `oraltolga`, `tolgaoral-dev`, `tolgaoralai`, `tolgabuilds`, `oral-t` | Free |
+
+Remaining steps (need you, cannot be automated — GitHub signup requires interactive email/captcha):
+
+1. Try logging in to `tolgaoral`; recover it if it is yours. Otherwise sign up as `tolga-oral`.
+2. Settings -> SSH keys -> add the public key from `~/.ssh/id_ed25519_personal.pub`.
+3. Settings -> Emails -> copy the `ID+username@users.noreply.github.com` address into
+   `~/.gitconfig-personal`.
+4. Tell me the username; I will create the remotes, push both repos, and set the profile README.
