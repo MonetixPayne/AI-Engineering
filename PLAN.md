@@ -165,19 +165,21 @@ Local setup is **done** (2026-09-21):
 - Repos scaffolded and first commit made: `~/Projects/personal/ai-engineering-proof`
   (7 phase folders + PLAN.md) and `~/Projects/personal/ai-engineering-lab`.
 
-Username findings:
+Account confirmed: **https://github.com/MonetixPayne/AI-Engineering** (user id 132578049, created
+2023-05-04, repo public, empty, default branch `main`). Not `tolgaoral`, not `verluna` — the
+engineering portfolio lives on its own identity.
 
-| Candidate | State |
-|---|---|
-| `tolgaoral` | Taken, **0 public repos, created 2024-02-14** — almost certainly yours and dormant. Best option if you can still log in. |
-| `llrd` | Taken, 0 repos, created 2019 — possibly also yours. |
-| `verluna` | Yours, 14 repos, consultancy brand. Keep separate from the engineering portfolio. |
-| `tolga-oral`, `oraltolga`, `tolgaoral-dev`, `tolgaoralai`, `tolgabuilds`, `oral-t` | Free |
+Wired locally 2026-09-21:
 
-Remaining steps (need you, cannot be automated — GitHub signup requires interactive email/captcha):
+- `~/.gitconfig-personal` -> `132578049+MonetixPayne@users.noreply.github.com` (real address, no
+  placeholder). Applies only under `~/Projects/personal/`.
+- Remote set: `origin git@github-personal:MonetixPayne/AI-Engineering.git`.
+- Both existing commits rewritten onto the MonetixPayne identity — no work email in history.
 
-1. Try logging in to `tolgaoral`; recover it if it is yours. Otherwise sign up as `tolga-oral`.
-2. Settings -> SSH keys -> add the public key from `~/.ssh/id_ed25519_personal.pub`.
-3. Settings -> Emails -> copy the `ID+username@users.noreply.github.com` address into
-   `~/.gitconfig-personal`.
-4. Tell me the username; I will create the remotes, push both repos, and set the profile README.
+**One step left, only you can do it:** add the SSH public key to the account. The key is already on
+your clipboard and https://github.com/settings/ssh/new is open. Paste, name it "MacBook personal",
+save. Then the push goes through (`git push -u origin main` from
+`~/Projects/personal/ai-engineering-proof`).
+
+The `ai-engineering-lab` repo is still local only — create it on GitHub when the first throwaway
+experiment needs a home, not before.
