@@ -183,3 +183,155 @@ save. Then the push goes through (`git push -u origin main` from
 
 The `ai-engineering-lab` repo is still local only — create it on GitHub when the first throwaway
 experiment needs a home, not before.
+
+
+---
+
+## The seven artifacts, one by one
+
+Each phase ends in one object. Not a topic studied, an object that exists and reports a number.
+For each: what you build, what it teaches, why the market pays for it, and what it fixes in you.
+
+### 1. Enrichment CLI with per-call cost and latency logged (Phase 0, weeks 1-2)
+
+**What it is.** A command line tool. You give it a company URL, it returns typed JSON
+(industry, size, tech signals, a one-line summary), and it prints what the call cost and how long
+it took. Under it sits a small module you wrote yourself: typed request and response, retry with
+backoff, timeout, token counting, cost per call written to a log file.
+
+**What it teaches.** The call path. Most people who use LLMs never see it. They use a framework
+wrapper and never learn what a retry, a truncated response, a rate limit, or a schema violation
+looks like. You will meet all four in two weeks.
+
+**Why the market pays for it.** Every production AI system fails at this layer first, and the
+people who can debug it are the ones who wrote it once by hand.
+
+**What it does for you.** It gives you a sentence almost no GTM leader can say: "this play costs
+0.4 cents per lead at 900ms." Pricing a workflow before building it changes how you argue for
+budget. It also makes the rest of the plan cheap, because every later phase reuses this module.
+
+### 2. recall@k across three retrieval configs on your own corpus (Phase 1, weeks 3-6)
+
+**What it is.** A benchmark. You take 50 questions with known correct answers over your own
+documents, then measure how often each retrieval setup actually finds the right passage. Three
+configs: plain vector search, hybrid search with keywords, hybrid plus a reranker. One table,
+three rows, recall@5 and MRR in the columns.
+
+**What it teaches.** That "the AI gave a wrong answer" is usually not a model problem. The model
+answered correctly from the wrong three paragraphs. Once you can measure retrieval separately from
+generation, you can find that out in ten minutes instead of arguing about prompts for a week.
+
+**Why the market pays for it.** Retrieval quality is the top cause of enterprise AI failure, and
+the reranker step typically moves recall by 20 to 30 points for a few milliseconds of latency.
+Knowing that, with your own numbers behind it, is worth more than any framework knowledge.
+
+**What it does for you.** Every GTM knowledge problem is a retrieval problem: battlecards, pricing
+rules, call notes, past deals, competitor pages. After this you can say why an assistant gave a bad
+answer and what specifically to change.
+
+### 3. CI that blocks a merge when judged quality drops (Phase 2, weeks 7-9)
+
+**What it is.** An automated gate. You collect 80 labelled examples of good and bad outputs, write
+a scoring rubric, have a second model grade against that rubric, and wire it into GitHub Actions.
+Change a prompt, open a pull request, and if the score falls below threshold the merge fails.
+
+**What it teaches.** How to turn taste into a measurement. Writing the rubric is the hard part and
+it is the skill: you have to say exactly what separates a good output from a bad one, in words a
+grader can apply the same way twice.
+
+**Why the market pays for it.** This is the single strongest screening signal for Applied AI and
+forward-deployed roles. Most candidates have shipped prompts and cannot tell you whether their last
+change helped or hurt. You will have a red build to point at.
+
+**What it does for you.** This is the direct cure for the pattern you already know about yourself:
+building machines instead of finishing and measuring. A gate that fails loudly makes finishing
+mandatory. It also ends pilot arguments at work. "92% accurate on 80 labelled cases, regression
+gated weekly" replaces "it seems to work well."
+
+### 4. Failure taxonomy with recovery paths (Phase 3, weeks 10-14)
+
+**What it is.** An agent that does something real (research an account, qualify a lead, route a
+request) plus a document listing every way you watched it fail, sorted by frequency, each with the
+recovery you built. Wrong tool chosen. Loop without progress. Hallucinated a field the CRM does not
+have. Silent partial failure. Next to it, a short note on one step where you removed the agent and
+used fixed code instead, and why.
+
+**What it teaches.** When not to use an agent. Agents are non-deterministic, slower, and more
+expensive. Roughly half the steps in a typical workflow should be plain code. Learning to tell
+which half is the actual seniority marker in this field right now.
+
+**Why the market pays for it.** Hiring has moved past "can you call a framework." Everyone can.
+The question is whether you can keep an agent in a cost and latency budget and recover it when it
+breaks at 3am.
+
+**What it does for you.** GTM plays are multi-step: research, qualify, route, draft, log. You will
+be able to scope which steps must be deterministic and which can be agentic. That judgement is
+exactly what revenue leaders cannot supply and keeps getting wrong.
+
+### 5. An MCP server someone can install from your README alone (Phase 4, weeks 15-18)
+
+**What it is.** Your own server exposing revenue tools to any assistant: `search_accounts`,
+`get_deal_history`, `draft_followup`. Read-only by default, write actions gated behind explicit
+approval. Published, documented, with an evaluation of how often the model picks the right tool.
+
+**What it teaches.** Tool design and permissions. A tool description is a prompt. Name a tool badly
+and the model calls it at the wrong moment; you learn this by watching it happen and fixing the
+description, not the model.
+
+**Why the market pays for it.** A working, documented MCP server is the strongest single portfolio
+object right now, because it is recent, scarce, and immediately verifiable. A reviewer can install
+it in one minute.
+
+**What it does for you.** It is the clearest expression of your combination. Nobody at a model
+vendor knows which CRM objects matter in a deal review, and nobody in revenue can ship a permissioned
+server. You would be doing both.
+
+### 6. A live endpoint with a load test and one incident writeup (Phase 5, weeks 19-21)
+
+**What it is.** The qualifier from Phase 2, deployed behind authentication, rate limited, cached,
+with p50 and p95 latency under load, cost per 1,000 requests, and cache hit rate published in the
+README. Plus one honest page about something that broke and what you changed.
+
+**What it teaches.** Concurrency, caching, timeouts, and the security questions that decide whether
+an internal tool ever reaches users: PII handling, prompt injection, what happens when the provider
+returns 429 for nine minutes.
+
+**Why the market pays for it.** This is the line between notebook work and engineering. It is also
+what unlocks lead and staff titles rather than analyst-adjacent ones.
+
+**What it does for you.** You will be able to promise a revenue org an SLA and a unit cost, then
+survive the security review. Most GTM AI projects die in exactly that meeting.
+
+The incident writeup matters more than it looks. Willingness to publish a failure with the fix is
+read as maturity, and almost nobody does it.
+
+### 7. A distilled small model scored against a prompted frontier baseline (Phase 6, weeks 22-24)
+
+**What it is.** Take one narrow repetitive task, lead scoring, and train a small model on the
+outputs of the big one. Then run both through the Phase 2 harness and publish two numbers side by
+side: accuracy delta and cost delta. The target is close accuracy at roughly a tenth of the cost.
+
+**What it teaches.** When to tune, when to prompt, and when to retrieve. Most people hold an
+opinion on this borrowed from a blog post. You will hold one backed by your own experiment, which
+is a different kind of confidence in an interview.
+
+**Why the market pays for it.** Cost is why AI projects stall after the pilot. Someone who can show
+a measured 10x cost reduction on a repetitive scoring task is speaking directly to the person who
+signs the renewal.
+
+**What it does for you.** It closes the credibility gap that your background invites. Having
+fine-tuned and measured a model, once, on your own data, ends the question of whether you are an
+engineer or a very good operator who uses tools.
+
+---
+
+## What the set adds up to
+
+Individually they are seven exercises. Together they are one sentence a hiring manager can verify
+in fifteen minutes: **this person builds revenue systems and proves they work, with numbers for
+quality, latency, and cost.**
+
+The order also matters for you personally. Phases 0 to 2 install the finishing habit before the
+work gets interesting enough to sprawl. By the time you reach agents in week 10, every experiment
+you run already reports a score, so the old failure mode, building a second machine instead of
+finishing the first, has nowhere to hide.
